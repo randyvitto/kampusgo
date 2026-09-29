@@ -26,44 +26,67 @@ class ProfileActivity : ComponentActivity() {
         val activity = this
 // Read the extra named "name". If screen 1 sent nothing, use Guest. No !!.
         val name = intent.getStringExtra("name") ?: "Guest"
+        val rawNpm = intent.getStringExtra("npm")
+        val npm = if (rawNpm.isNullOrBlank()) "-" else rawNpm
         setContent {
             KampusGoTheme {
                 Column(modifier = Modifier.padding(24.dp)) {
 // Show the name that traveled inside the Intent.
                     Text(text = "Hello, $name")
+                    Text(text = "NPM, $npm")
                     Button(onClick = {
 // Implicit Intent: do not name an Activity. Ask the phone for a dialer.
                         val dial = Intent(Intent.ACTION_DIAL, Uri.parse("tel:0211234567"))
                         try {
                             activity.startActivity(dial)
                         } catch (e: ActivityNotFoundException) {
-                            Toast.makeText(activity, "No dialer on this device", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(activity, "No dialer on this device", Toast.LENGTH_SHORT)
+                                .show()
                         }
                     }) {
                         Text("Call campus")
+                    }
+                    Button(onClick = {
+                        val webintent =
+                            Intent(Intent.ACTION_VIEW, Uri.parse("https://www.sgu.ac.id"))
+                        try {
+                            activity.startActivity(webintent)
+                        } catch (e: ActivityNotFoundException) {
+                            Toast.makeText(
+                                activity,
+                                "No browser on this device",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }) {
+                        Text("Open Website")
                     }
                 }
             }
         }
     }
-    // Visible, but not yet the screen in front.
-    override fun onStart() {
-        super.onStart()
-        Log.d("KampusGo", "onStart")
-    }
-    // In front. The user can tap the button.
-    override fun onResume() {
-        super.onResume()
-        Log.d("KampusGo", "onResume")
-    }
-    // Leaving, or the phone is rotating.
-    override fun onPause() {
-        super.onPause()
-        Log.d("KampusGo", "onPause")
-    }
-    // No longer visible.
-    override fun onStop() {
-        super.onStop()
-        Log.d("KampusGo", "onStop")
-    }
+        // Visible, but not yet the screen in front.
+        override fun onStart() {
+            super.onStart()
+            Log.d("KampusGo", "onStart")
+        }
+
+        // In front. The user can tap the button.
+        override fun onResume() {
+            super.onResume()
+            Log.d("KampusGo", "onResume")
+        }
+
+        // Leaving, or the phone is rotating.
+        override fun onPause() {
+            super.onPause()
+            Log.d("KampusGo", "onPause")
+        }
+
+        // No longer visible.
+        override fun onStop() {
+            super.onStop()
+            Log.d("KampusGo", "onStop")
+        }
+
 }
