@@ -11,11 +11,14 @@ fun KampusNav(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
     NavHost(
         navController = navController,
-        startDestination = "notes",
+        startDestination = "events",
         modifier = modifier
     ) {
         composable("notes") {
             NotesScreen()
+        }
+        composable("events") {
+            EventsScreen(onEventClick = { id -> navController.navigate("event/$id") })
         }
     }
 }

@@ -37,7 +37,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             KampusGoTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    NotesScreen(modifier = Modifier.padding(innerPadding))
+                    KampusNav(modifier = Modifier.padding(innerPadding))
                 }
             }
         }
